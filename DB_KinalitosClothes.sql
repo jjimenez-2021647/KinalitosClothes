@@ -59,6 +59,22 @@ Create table Usuarios(
     primary key PK_codigoUsuario (codigoUsuario) 
 );
 
+-- Productos
+Create table Productos(
+	codigoProducto int auto_increment,
+    nombreProducto varchar(100) not null,
+    descripcionProducto varchar(200) not null,
+    precioProducto double(5,2) not null,
+    stock int not null,
+    codigoProveedor int not null,
+    codigoCategoria int not null,
+    primary key PK_codigoProducto (codigoProducto),
+    constraint FK_codigoProveedor foreign key (codigoProveedor)
+		references Proveedores (codigoProveedor),
+	constraint FK_codigoCategoria foreign key (codigoCategoria)
+		references Categorias (codigoCategoria)
+);
+
 -- --------------------------- Procedimientos almacenados ---------------------------
 -- --------------------------- Entidad Cliente --------------------------- 
 -- Agregar Cliente
