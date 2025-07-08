@@ -127,3 +127,96 @@ call sp_EditarCliente(17, 'Óscar', 'Ramírez', 'oscar.ramirez@gmail.com', '+502
 call sp_EditarCliente(18, 'Isabel', 'López', 'isabel.lopez@gmail.com', '+502 3902-8765', 'Mixco, zona 1');
 call sp_EditarCliente(19, 'Ricardo', 'Estrada', 'ricardo.estrada@gmail.com', '+502 4791-2345', 'Zona 2, El Sauce');
 call sp_EditarCliente(20, 'Valeria', 'Guzmán', 'valeria.guzman@gmail.com', '+502 6012-9876', 'Zona 19, Santa Faz');
+
+-- --------------------------- Entidad Proveedor --------------------------- 
+-- Agregar Proveedor
+Delimiter //
+	Create procedure sp_AgregarProveedor(
+    in nombreProveedor varchar(100), 
+    in telefonoProveedor varchar(20), 
+    in correoProveedor varchar(200), 
+    in paisProveedor varchar(150))
+		Begin
+			Insert into Proveedores(nombreProveedor, telefonoProveedor, correoProveedor, paisProveedor)
+				Values(nombreProveedor, telefonoProveedor, correoProveedor, paisProveedor);
+        End //
+Delimiter ;
+call sp_AgregarProveedor('Textiles Centro', '+502 2456-7890', 'textiles.centro@gmail.com', 'Guatemala');
+call sp_AgregarProveedor('Distribuidora El Faro', '+502 3345-1234', 'elfaro.proveedores@gmail.com', 'Guatemala');
+call sp_AgregarProveedor('Moda Global', '+502 5566-7788', 'modaglobal@gmail.com', 'México');
+call sp_AgregarProveedor('Colores y Telas', '+502 4789-0012', 'coloresytelas@gmail.com', 'El Salvador');
+call sp_AgregarProveedor('Fashion Import', '+502 5123-4567', 'fashionimport@gmail.com', 'Estados Unidos');
+call sp_AgregarProveedor('Ropa Latina', '+502 6034-5678', 'ropalatina@gmail.com', 'Honduras');
+call sp_AgregarProveedor('Tejidos Maya', '+502 7234-1122', 'tejidosmaya@gmail.com', 'Guatemala');
+call sp_AgregarProveedor('Estilo Urbano', '+502 3109-8765', 'estilourbano@gmail.com', 'Costa Rica');
+call sp_AgregarProveedor('Boutique Express', '+502 4490-2233', 'boutique.express@gmail.com', 'Guatemala');
+call sp_AgregarProveedor('Importadora del Sur', '+502 5678-3344', 'import.sur@gmail.com', 'Panamá');
+call sp_AgregarProveedor('Distribuciones Vera', '+502 6012-4455', 'vera.distribuciones@gmail.com', 'Nicaragua');
+call sp_AgregarProveedor('Telas del Norte', '+502 4343-5566', 'telasnorte@gmail.com', 'México');
+call sp_AgregarProveedor('Universal Ropa', '+502 7201-6677', 'universalropa@gmail.com', 'Colombia');
+call sp_AgregarProveedor('Ropa Moderna', '+502 8182-7788', 'ropamoderna@gmail.com', 'Guatemala');
+call sp_AgregarProveedor('Estampados GT', '+502 9093-8899', 'estampados.gt@gmail.com', 'Guatemala');
+call sp_AgregarProveedor('Tendencias del Istmo', '+502 4567-9900', 'tendenciasistmo@gmail.com', 'El Salvador');
+call sp_AgregarProveedor('Comercial La Moda', '+502 2121-3344', 'comercialmoda@gmail.com', 'Honduras');
+call sp_AgregarProveedor('Distribuciones América', '+502 3678-4455', 'america.dist@gmail.com', 'Costa Rica');
+call sp_AgregarProveedor('Tiendas FashionMix', '+502 4532-6677', 'fashionmix.proveedor@gmail.com', 'Guatemala');
+call sp_AgregarProveedor('Estilo Joven', '+502 2345-7788', 'estilojoven.gt@gmail.com', 'México');
+
+
+-- Listar Proveedor
+Delimiter //
+	Create procedure sp_ListarProveedor()
+		Begin
+			Select codigoProveedor, nombreProveedor, telefonoProveedor, correoProveedor, paisProveedor from Proveedores;
+        End //
+Delimiter ;
+call sp_ListarProveedor();
+
+-- Eliminar Proveedor
+Delimiter //
+	Create procedure sp_EliminarProveedor(
+    in _codigoProveedor int)
+		Begin
+			set foreign_key_checks = 0;
+				Delete from Proveedores
+					where codigoProveedor = _codigoProveedor;
+				Select row_count() as filasEliminadas;
+			set foreign_key_checks = 1;
+        End//
+Delimiter ;
+call sp_EliminarProveedor(15);
+
+-- Buscar Proveedor
+Delimiter //
+	Create procedure sp_BuscarProveedor(
+    in _codigoProveedor int)
+		Begin
+			Select codigoProveedor, nombreProveedor, telefonoProveedor, correoProveedor, paisProveedor from Proveedores
+				where codigoProveedor = _codigoProveedor;
+        End //
+Delimiter ;
+call sp_BuscarProveedor(1);
+
+-- Editar Proveedor
+Delimiter //
+	Create procedure sp_EditarProveedor(
+    in _codigoProveedor int,
+    in _nombreProveedor varchar(100), 
+    in _telefonoProveedor varchar(20), 
+    in _correoProveedor varchar(200), 
+    in _paisProveedor varchar(150))
+		Begin
+			Update Proveedores
+				set nombreProveedor = _nombreProveedor,
+					telefonoProveedor = _telefonoProveedor,
+                    correoProveedor = _correoProveedor,
+                    paisProveedor = _paisProveedor
+					where codigoProveedor = _codigoProveedor;
+        End //
+Delimiter ;
+call sp_EditarProveedor(16, 'Tendencias del Sur', '+502 4567-8899', 'tendenciassur@gmail.com', 'Costa Rica');
+call sp_EditarProveedor(17, 'La Moda Express', '+502 2122-4455', 'lamodaexpress@gmail.com', 'Honduras');
+call sp_EditarProveedor(18, 'Distribuciones Continental', '+502 3678-5566', 'dist.continental@gmail.com', 'Colombia');
+call sp_EditarProveedor(19, 'FashionMix Proveedores', '+502 4533-6788', 'proveedor.fashionmix@gmail.com', 'Guatemala');
+call sp_EditarProveedor(20, 'Estilo Joven Plus', '+502 2346-7899', 'estilojovenplus@gmail.com', 'México');
+
