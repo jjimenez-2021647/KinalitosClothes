@@ -19,6 +19,25 @@ Create table Clientes(
 	direccionCliente varchar(200) not null,
 	primary key PK_codigoCliente (codigoCliente));
     
+    -- Proveedores 
+Create table Proveedores(
+	codigoProveedor int auto_increment,
+    nombreProveedor varchar(100) not null,
+    telefonoProveedor varchar(20) not null,
+    correoProveedor varchar(200) not null,
+    paisProveedor varchar(150),
+    primary key PK_codigoProveedor (codigoProveedor)
+);
+
+Create table Categoria(
+	codigoCategoria int auto_increment,
+    nombreCategoria varchar(100) not null,
+    descripcionCategoria varchar(200) not null,
+    genero enum('Hombre', 'Mujer', 'Unisex') not null,
+    rangoEdad enum('Infantil', 'Juvenil', 'Adultos') not null,
+    primary key PK_codigoCategoria (codigoCategoria)
+);
+    
 -- --------------------------- Procedimientos almacenados ---------------------------
 -- --------------------------- Entidad Cliente --------------------------- 
 -- Agregar Cliente
@@ -35,15 +54,6 @@ Delimiter //
         End //
 Delimiter ;
 
--- Proveedores 
-Create table Proveedores(
-	codigoProveedor int auto_increment,
-    nombreProveedor varchar(100) not null,
-    telefonoProveedor varchar(20) not null,
-    correoProveedor varchar(200) not null,
-    paisProveedor varchar(150),
-    primary key PK_codigoProveedor (codigoProveedor)
-);
 
 call sp_AgregarCliente('Carlos', 'Ramírez', 'carlos.ramirez@gmail.com', '+502 5123-4567', 'Zona 1, Ciudad de Guatemala');
 call sp_AgregarCliente('Ana', 'Gómez', 'ana.gomez@gmail.com', '+502 4785-1234', 'Zona 10, Guatemala');
