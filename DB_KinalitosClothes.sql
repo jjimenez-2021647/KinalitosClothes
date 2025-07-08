@@ -1,5 +1,5 @@
--- Por Josué Gilberto Jiménez Ajtún, Sebastian alejandro Molina Herrera, Rhandy Estuardo Cana Subuyj, , Alejandro Jose Arocha Virula
--- 2021647, 2021528, 2021639, , 2024203,
+-- Por Josué Gilberto Jiménez Ajtún, Sebastian alejandro Molina Herrera, Rhandy Estuardo Cana Subuyj, Joshua Alejandro Santa Cruz Chicas, Alejandro Jose Arocha Virula
+-- 2021647, 2021528, 2021639, 2024254, 2024203,
 -- IN5BM
 -- 07/07/2025
 
