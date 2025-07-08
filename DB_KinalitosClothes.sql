@@ -1,4 +1,4 @@
--- Por Josué Gilberto Jiménez Ajtún, Sebastian alejandro Molina Herrera, Rhandy Estuardo Cana Subuyj 
+-- Por Josué Gilberto Jiménez Ajtún, Sebastian alejandro Molina Herrera, Rhandy Estuardo Cana Subuyj,
 -- 2021647, 2021528, 2021639
 -- IN5BM
 -- 07/07/2025
@@ -29,7 +29,7 @@ Create table Proveedores(
     primary key PK_codigoProveedor (codigoProveedor)
 );
 
-Create table Categoria(
+Create table Categorias(
 	codigoCategoria int auto_increment,
     nombreCategoria varchar(100) not null,
     descripcionCategoria varchar(200) not null,
@@ -38,6 +38,16 @@ Create table Categoria(
     primary key PK_codigoCategoria (codigoCategoria)
 );
     
+-- Metodo Pagos
+Create table MetodoPagos(
+	codigoMetodoPago int auto_increment,
+    tipoMetodoPago enum('Tarjeta', 'Efectivo') not null,
+    entidadFinanciaera varchar(200) not null,
+    moneda varchar(150) not null,
+	porcentajeComision double(5,2) not null,
+    primary key PK_codigoMetodoPago (codigoMetodoPago)
+);
+
 -- --------------------------- Procedimientos almacenados ---------------------------
 -- --------------------------- Entidad Cliente --------------------------- 
 -- Agregar Cliente
