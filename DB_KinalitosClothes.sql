@@ -29,6 +29,7 @@ Create table Proveedores(
     primary key PK_codigoProveedor (codigoProveedor)
 );
 
+-- Categorias
 Create table Categorias(
 	codigoCategoria int auto_increment,
     nombreCategoria varchar(100) not null,
@@ -432,5 +433,95 @@ call sp_EditarMetodoPago(18, 'Tarjeta', 'WU Servicios', 'USD', 2.90);
 call sp_EditarMetodoPago(19, 'Efectivo', 'Caja Local', 'Quetzal', 0.00);
 call sp_EditarMetodoPago(20, 'Tarjeta', 'Stripe Global', 'USD', 3.75);
 
+-- --------------------------- Entidad Usuario --------------------------- 
+-- Agregar Usuario
+Delimiter //
+	Create procedure sp_AgregarUsuario(
+    in nombreUsuario varchar(100), 
+    in contraseñaUsuario varchar(100), 
+    in tipoUsuario enum('Admin','Usuario'), 
+    in fechaRegistro date)
+		Begin
+			Insert into Usuarios(nombreUsuario, contraseñaUsuario, tipoUsuario, fechaRegistro)
+				Values(nombreUsuario, contraseñaUsuario, tipoUsuario, fechaRegistro);
+        End //
+Delimiter ;
+call sp_AgregarUsuario('admin01', 'admin2024', 'Admin', '2024-01-15');
+call sp_AgregarUsuario('juanperez', 'pass123', 'Usuario', '2024-02-10');
+call sp_AgregarUsuario('carmen.m', 'cm456', 'Usuario', '2024-03-08');
+call sp_AgregarUsuario('sofia123', 's0f1aPass', 'Usuario', '2024-04-01');
+call sp_AgregarUsuario('marioGT', 'mario!@#', 'Admin', '2024-04-05');
+call sp_AgregarUsuario('laura.r', 'l@urita', 'Usuario', '2024-05-22');
+call sp_AgregarUsuario('user_demo', 'demo2024', 'Usuario', '2024-06-01');
+call sp_AgregarUsuario('karen_89', 'kar345', 'Usuario', '2024-06-05');
+call sp_AgregarUsuario('admin_sys', 'sysadmin', 'Admin', '2024-06-08');
+call sp_AgregarUsuario('pedro_r', 'pedro1234', 'Usuario', '2024-06-10');
+call sp_AgregarUsuario('angelica.g', 'angel789', 'Usuario', '2024-06-12');
+call sp_AgregarUsuario('oscar_u', 'oscu2024', 'Usuario', '2024-06-13');
+call sp_AgregarUsuario('claudia.t', 'claud!2024', 'Usuario', '2024-06-14');
+call sp_AgregarUsuario('adminMain', 'adminMain1', 'Admin', '2024-06-15');
+call sp_AgregarUsuario('david_dev', 'devpass', 'Usuario', '2024-06-16');
+call sp_AgregarUsuario('sofiaAdmin', 'sofiA#2024', 'Admin', '2024-06-17');
+call sp_AgregarUsuario('test_user', 'test123', 'Usuario', '2024-06-18');
+call sp_AgregarUsuario('natalia', 'nata2024', 'Usuario', '2024-06-19');
+call sp_AgregarUsuario('kevin.t', 'kevkev', 'Usuario', '2024-06-20');
+call sp_AgregarUsuario('admin_jose', 'jo$eAdm', 'Admin', '2024-06-21');
+call sp_AgregarUsuario('1', '1', 'Admin', '2024-06-21');
+call sp_AgregarUsuario('2', '2', 'Usuario', '2024-06-21');
 
+-- Listar Usuario
+Delimiter //
+	Create procedure sp_ListarUsuario()
+		Begin
+			Select codigoUsuario, nombreUsuario, contraseñaUsuario, tipoUsuario, fechaRegistro from Usuarios;
+        End //
+Delimiter ;
+call sp_ListarUsuario();
 
+-- Eliminar Usuario
+Delimiter //
+	Create procedure sp_EliminarUsuario(
+    in _codigoUsuario int)
+		Begin
+			set foreign_key_checks = 0;
+				Delete from Usuarios
+					where codigoUsuario = _codigoUsuario;
+				Select row_count() as filasEliminadas;
+			set foreign_key_checks = 1;
+        End//
+Delimiter ;
+call sp_EliminarUsuario(15);
+
+-- Buscar Usuario
+Delimiter //
+	Create procedure sp_BuscarUsuario(
+    in _codigoUsuario int)
+		Begin
+			Select codigoUsuario, nombreUsuario, contraseñaUsuario, tipoUsuario, fechaRegistro from Usuarios
+				where codigoUsuario = _codigoUsuario;
+        End //
+Delimiter ;
+call sp_BuscarUsuario(1);
+
+-- Editar Usuario
+Delimiter //
+	Create procedure sp_EditarUsuario(
+    in _codigoUsuario int, 
+    in _nombreUsuario varchar(100), 
+    in _contraseñaUsuario varchar(100), 
+    in _tipoUsuario enum('Admin','Usuario'), 
+    in _fechaRegistro date)
+		Begin
+			Update Usuarios
+				set nombreUsuario = _nombreUsuario,
+					contraseñaUsuario = _contraseñaUsuario,
+                    tipoUsuario = _tipoUsuario,
+                    fechaRegistro = _fechaRegistro
+					where codigoUsuario = _codigoUsuario;
+        End //
+Delimiter ;
+call sp_EditarUsuario(16, 'sofiaAdmin', 'sofiActualizada2025', 'Admin', '2025-06-01');
+call sp_EditarUsuario(17, 'test_user_updated', 'testActualizado', 'Usuario', '2025-06-02');
+call sp_EditarUsuario(18, 'natalia.t', 'nataNueva123', 'Usuario', '2025-06-03');
+call sp_EditarUsuario(19, 'kevinTech', 'kt2025!', 'Usuario', '2025-06-04');
+call sp_EditarUsuario(20, 'admin_jose_2', 'adminJose2025', 'Admin', '2025-06-05');
