@@ -1,5 +1,5 @@
--- Por Josué Gilberto Jiménez Ajtún, Sebastian alejandro Molina Herrera
--- 2021647, 2021528
+-- Por Josué Gilberto Jiménez Ajtún, Sebastian alejandro Molina Herrera, Rhandy Estuardo Cana Subuyj 
+-- 2021647, 2021528, 2021639
 -- IN5BM
 -- 07/07/2025
 
@@ -34,6 +34,17 @@ Delimiter //
 				Values(nombreCliente, apellidoCliente, correoCliente, telefonoCliente, direccionCliente);
         End //
 Delimiter ;
+
+-- Proveedores 
+Create table Proveedores(
+	codigoProveedor int auto_increment,
+    nombreProveedor varchar(100) not null,
+    telefonoProveedor varchar(20) not null,
+    correoProveedor varchar(200) not null,
+    paisProveedor varchar(150),
+    primary key PK_codigoProveedor (codigoProveedor)
+);
+
 call sp_AgregarCliente('Carlos', 'Ramírez', 'carlos.ramirez@gmail.com', '+502 5123-4567', 'Zona 1, Ciudad de Guatemala');
 call sp_AgregarCliente('Ana', 'Gómez', 'ana.gomez@gmail.com', '+502 4785-1234', 'Zona 10, Guatemala');
 call sp_AgregarCliente('Luis', 'Martínez', 'luis.martinez@gmail.com', '+502 2234-5678', 'Zona 7, Mixco');
