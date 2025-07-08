@@ -654,3 +654,100 @@ call sp_EditarProducto(17, 'Falda Floral', 'Falda con diseño floral', '94.95', 
 call sp_EditarProducto(18, 'Camisa Cuadros', 'Camisa casual a cuadros', '159.00', 30, 3, 1);
 call sp_EditarProducto(19, 'Short Deportivo Niña', 'Short para niña con estampado', '74.99', 36, 4, 3);
 call sp_EditarProducto(20, 'Traje Formal Niño', 'Traje elegante para niño pequeño', '199.99', 10, 5, 5);
+
+-- --------------------------- Entidad Pedido --------------------------- 
+-- Agregar Pedido
+Delimiter //
+	Create procedure sp_AgregarPedido(
+    in horaPedido time, 
+    in fechaPedido date, 
+    in estadoPedido enum('Pendiente','Enviado','Entregado'), 
+    in total double(5,2), 
+    in codigoCliente int, 
+    in codigoMetodoPago int)
+		Begin
+			Insert into Pedidos(horaPedido, fechaPedido, estadoPedido, total, codigoCliente, codigoMetodoPago)
+				Values(horaPedido, fechaPedido, estadoPedido, total, codigoCliente, codigoMetodoPago);
+        End //
+Delimiter ;
+call sp_AgregarPedido('10:30:00', '2025-06-01', 'Pendiente', 599.99, 1, 1);
+call sp_AgregarPedido('11:00:00', '2025-06-02', 'Enviado', 320.50, 2, 2);
+call sp_AgregarPedido('14:15:00', '2025-06-03', 'Entregado', 109.00, 3, 3);
+call sp_AgregarPedido('09:45:00', '2025-06-04', 'Pendiente', 799.75, 4, 4);
+call sp_AgregarPedido('16:00:00', '2025-06-05', 'Pendiente', 239.90, 5, 5);
+call sp_AgregarPedido('12:30:00', '2025-06-06', 'Enviado', 420.00, 1, 2);
+call sp_AgregarPedido('13:50:00', '2025-06-07', 'Entregado', 990.00, 2, 1);
+call sp_AgregarPedido('10:00:00', '2025-06-08', 'Pendiente', 560.25, 3, 3);
+call sp_AgregarPedido('15:30:00', '2025-06-09', 'Enviado', 310.40, 4, 4);
+call sp_AgregarPedido('08:20:00', '2025-06-10', 'Entregado', 150.00, 5, 5);
+call sp_AgregarPedido('14:10:00', '2025-06-11', 'Pendiente', 725.10, 1, 2);
+call sp_AgregarPedido('17:00:00', '2025-06-12', 'Enviado', 612.00, 2, 3);
+call sp_AgregarPedido('11:45:00', '2025-06-13', 'Entregado', 832.50, 3, 1);
+call sp_AgregarPedido('09:00:00', '2025-06-14', 'Pendiente', 195.95, 4, 2);
+call sp_AgregarPedido('13:20:00', '2025-06-15', 'Pendiente', 485.35, 5, 3);
+call sp_AgregarPedido('16:10:00', '2025-06-16', 'Enviado', 721.00, 1, 4);
+call sp_AgregarPedido('10:50:00', '2025-06-17', 'Entregado', 399.99, 2, 5);
+call sp_AgregarPedido('12:10:00', '2025-06-18', 'Pendiente', 690.30, 3, 2);
+call sp_AgregarPedido('14:55:00', '2025-06-19', 'Enviado', 845.00, 4, 3);
+call sp_AgregarPedido('08:40:00', '2025-06-20', 'Entregado', 270.60, 5, 1);
+
+-- Listar Pedido
+Delimiter //
+	Create procedure sp_ListarPedido()
+		Begin
+			Select codigoPedido, horaPedido, fechaPedido, estadoPedido, total, codigoCliente, codigoMetodoPago from Pedidos;
+        End //
+Delimiter ;
+call sp_ListarPedido();
+
+-- Eliminar Pedido
+Delimiter //
+	Create procedure sp_EliminarPedido(
+    in _codigoPedido int)
+		Begin
+			set foreign_key_checks = 0;
+				Delete from Pedidos
+					where codigoPedido = _codigoPedido;
+				Select row_count() as filasEliminadas;
+			set foreign_key_checks = 1;
+        End//
+Delimiter ;
+call sp_EliminarPedido(15);
+
+-- Buscar Pedido
+Delimiter //
+	Create procedure sp_BuscarPedido(
+    in _codigoPedido int)
+		Begin
+			Select codigoPedido, horaPedido, fechaPedido, estadoPedido, total, codigoCliente, codigoMetodoPago from Pedidos
+				where codigoPedido = _codigoPedido;
+        End //
+Delimiter ;
+call sp_BuscarPedido(1);
+
+-- Editar Pedido
+Delimiter //
+	Create procedure sp_EditarPedido(
+    in _codigoPedido int,
+    in _horaPedido time, 
+    in _fechaPedido date, 
+    in _estadoPedido enum('Pendiente','Enviado','Entregado'), 
+    in _total double(5,2), 
+    in _codigoCliente int, 
+    in _codigoMetodoPago int)
+		Begin
+			Update Pedidos
+				set horaPedido = _horaPedido,
+					fechaPedido = _fechaPedido,
+                    estadoPedido = _estadoPedido,
+                    total = _total,
+                    codigoCliente = _codigoCliente,
+                    codigoMetodoPago = _codigoMetodoPago
+					where codigoPedido = _codigoPedido;
+        End //
+Delimiter ;
+call sp_EditarPedido(16, '15:00:00', '2025-06-16', 'Entregado', 750.00, 1, 5);
+call sp_EditarPedido(17, '11:30:00', '2025-06-17', 'Pendiente', 430.20, 2, 1);
+call sp_EditarPedido(18, '13:45:00', '2025-06-18', 'Enviado', 980.10, 3, 4);
+call sp_EditarPedido(19, '09:30:00', '2025-06-19', 'Entregado', 299.90, 4, 2);
+call sp_EditarPedido(20, '10:25:00', '2025-06-20', 'Pendiente', 645.55, 5, 3);
