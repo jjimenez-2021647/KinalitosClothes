@@ -541,3 +541,100 @@ call sp_EditarUsuario(17, 'test_user_updated', 'testActualizado', 'Usuario', '20
 call sp_EditarUsuario(18, 'natalia.t', 'nataNueva123', 'Usuario', '2025-06-03');
 call sp_EditarUsuario(19, 'kevinTech', 'kt2025!', 'Usuario', '2025-06-04');
 call sp_EditarUsuario(20, 'admin_jose_2', 'adminJose2025', 'Admin', '2025-06-05');
+
+-- --------------------------- Entidad Producto --------------------------- 
+-- Agregar Producto
+Delimiter //
+	Create procedure sp_AgregarProducto(
+    in nombreProducto varchar(100), 
+    in descripcionProducto varchar(100), 
+    in precioProducto varchar(200), 
+    in stock int, 
+    in codigoProveedor int, 
+    in codigoCategoria int)
+		Begin
+			Insert into Productos(nombreProducto, descripcionProducto, precioProducto, stock, codigoProveedor, codigoCategoria)
+				Values(nombreProducto, descripcionProducto, precioProducto, stock, codigoProveedor, codigoCategoria);
+        End //
+Delimiter ;
+call sp_AgregarProducto('Camisa Casual Azul', 'Camisa de algodón manga larga', '129.99', 50, 1, 1);
+call sp_AgregarProducto('Blusa Estampada', 'Blusa fresca para verano', '89.50', 30, 2, 2);
+call sp_AgregarProducto('Pantalón Jeans', 'Pantalón de mezclilla juvenil', '199.00', 40, 3, 3);
+call sp_AgregarProducto('Vestido Largo', 'Vestido elegante de fiesta', '279.99', 20, 4, 2);
+call sp_AgregarProducto('Short Deportivo', 'Short unisex para deporte', '69.99', 60, 5, 3);
+call sp_AgregarProducto('Sudadera Capucha', 'Sudadera gruesa para frío', '159.75', 35, 1, 4);
+call sp_AgregarProducto('Falda Negra', 'Falda básica para oficina', '99.25', 25, 2, 2);
+call sp_AgregarProducto('Camisa Polo', 'Polo casual color blanco', '139.00', 55, 3, 1);
+call sp_AgregarProducto('Leggins Deportivos', 'Leggins ajustados y cómodos', '119.95', 38, 4, 3);
+call sp_AgregarProducto('Conjunto Infantil', 'Ropa para niño con estampado', '89.99', 45, 5, 5);
+call sp_AgregarProducto('Camiseta Básica', 'Camiseta algodón unisex', '59.00', 100, 1, 3);
+call sp_AgregarProducto('Pantalón Cargo', 'Pantalón con múltiples bolsillos', '149.50', 22, 2, 1);
+call sp_AgregarProducto('Chaqueta Mezclilla', 'Chaqueta juvenil estilo moderno', '199.90', 18, 3, 3);
+call sp_AgregarProducto('Vestido de Verano', 'Vestido fresco estampado', '109.00', 27, 4, 2);
+call sp_AgregarProducto('Pijama Infantil', 'Pijama para niño en algodón', '79.99', 50, 5, 5);
+call sp_AgregarProducto('Suéter Largo', 'Suéter largo de punto', '129.99', 19, 1, 4);
+call sp_AgregarProducto('Falda Jean', 'Falda de mezclilla juvenil', '89.95', 26, 2, 2);
+call sp_AgregarProducto('Camisa Formal', 'Camisa de vestir blanca', '149.99', 33, 3, 1);
+call sp_AgregarProducto('Short Estampado', 'Short veraniego con diseño', '69.99', 42, 4, 3);
+call sp_AgregarProducto('Traje Infantil', 'Traje elegante para niño', '189.99', 12, 5, 5);
+
+-- Listar Producto
+Delimiter //
+	Create procedure sp_ListarProducto()
+		Begin
+			Select codigoProducto, nombreProducto, descripcionProducto, precioProducto, stock, codigoProveedor, codigoCategoria from Productos;
+        End //
+Delimiter ;
+call sp_ListarProducto();
+
+-- Eliminar Producto
+Delimiter //
+	Create procedure sp_EliminarProducto(
+    in _codigoProducto int)
+		Begin
+			set foreign_key_checks = 0;
+				Delete from Productos
+					where codigoProducto = _codigoProducto;
+				Select row_count() as filasEliminadas;
+			set foreign_key_checks = 1;
+        End//
+Delimiter ;
+call sp_EliminarProducto(15);
+
+-- Buscar Usuario
+Delimiter //
+	Create procedure sp_BuscarProducto(
+    in _codigoProducto int)
+		Begin
+			Select codigoProducto, nombreProducto, descripcionProducto, precioProducto, stock, codigoProveedor, codigoCategoria from Productos
+				where codigoProducto = _codigoProducto;
+        End //
+Delimiter ;
+call sp_BuscarProducto(1);
+
+-- Editar Producto
+Delimiter //
+	Create procedure sp_EditarProducto(
+    in _codigoProducto int,
+    in _nombreProducto varchar(100), 
+    in _descripcionProducto varchar(100), 
+    in _precioProducto varchar(200), 
+    in _stock int, 
+    in _codigoProveedor int, 
+    in _codigoCategoria int)
+		Begin
+			Update Productos
+				set nombreProducto = _nombreProducto,
+					descripcionProducto = _descripcionProducto,
+                    precioProducto = _precioProducto,
+                    stock = _stock,
+                    codigoProveedor = _codigoProveedor,
+                    codigoCategoria = _codigoCategoria
+					where codigoProducto = _codigoProducto;
+        End //
+Delimiter ;
+call sp_EditarProducto(16, 'Suéter Corto', 'Suéter juvenil con cuello en V', '139.00', 25, 1, 4);
+call sp_EditarProducto(17, 'Falda Floral', 'Falda con diseño floral', '94.95', 22, 2, 2);
+call sp_EditarProducto(18, 'Camisa Cuadros', 'Camisa casual a cuadros', '159.00', 30, 3, 1);
+call sp_EditarProducto(19, 'Short Deportivo Niña', 'Short para niña con estampado', '74.99', 36, 4, 3);
+call sp_EditarProducto(20, 'Traje Formal Niño', 'Traje elegante para niño pequeño', '199.99', 10, 5, 5);
