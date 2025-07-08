@@ -765,3 +765,97 @@ call sp_EditarPedido(17, '11:30:00', '2025-06-17', 'Pendiente', 430.20, 2, 1);
 call sp_EditarPedido(18, '13:45:00', '2025-06-18', 'Enviado', 980.10, 3, 4);
 call sp_EditarPedido(19, '09:30:00', '2025-06-19', 'Entregado', 299.90, 4, 2);
 call sp_EditarPedido(20, '10:25:00', '2025-06-20', 'Pendiente', 645.55, 5, 3);
+
+-- --------------------------- Entidad DetallePedido --------------------------- 
+-- Agregar DetallePedido
+Delimiter //
+	Create procedure sp_AgregarDetallePedido(
+    in cantidad int, 
+    in subtotal double(5,2), 
+    in descripcion varchar(200), 
+    in codigoPedido int, 
+    in codigoProducto int)
+		Begin
+			Insert into DetallePedidos(cantidad, subtotal, descripcion, codigoPedido, codigoProducto)
+				Values(cantidad, subtotal, descripcion, codigoPedido, codigoProducto);
+        End //
+Delimiter ;
+call sp_AgregarDetallePedido(2, 259.98, 'Camisa casual azul', 1, 1);
+call sp_AgregarDetallePedido(1, 89.50, 'Blusa estampada', 2, 2);
+call sp_AgregarDetallePedido(3, 597.00, 'Pantalón jeans', 3, 3);
+call sp_AgregarDetallePedido(1, 279.99, 'Vestido largo', 4, 4);
+call sp_AgregarDetallePedido(2, 139.98, 'Short deportivo', 5, 5);
+call sp_AgregarDetallePedido(1, 159.75, 'Sudadera capucha', 6, 6);
+call sp_AgregarDetallePedido(2, 198.50, 'Falda negra', 7, 7);
+call sp_AgregarDetallePedido(1, 139.00, 'Camisa polo', 8, 8);
+call sp_AgregarDetallePedido(3, 359.85, 'Leggins deportivos', 9, 9);
+call sp_AgregarDetallePedido(2, 179.98, 'Conjunto infantil', 10, 10);
+call sp_AgregarDetallePedido(4, 236.00, 'Camiseta básica', 11, 11);
+call sp_AgregarDetallePedido(1, 149.50, 'Pantalón cargo', 12, 12);
+call sp_AgregarDetallePedido(1, 199.90, 'Chaqueta mezclilla', 13, 13);
+call sp_AgregarDetallePedido(2, 218.00, 'Vestido de verano', 14, 14);
+call sp_AgregarDetallePedido(1, 79.99, 'Pijama infantil', 1, 1);
+call sp_AgregarDetallePedido(2, 259.98, 'Suéter largo', 16, 16);
+call sp_AgregarDetallePedido(2, 179.90, 'Falda jean', 17, 17);
+call sp_AgregarDetallePedido(1, 149.99, 'Camisa formal', 18, 18);
+call sp_AgregarDetallePedido(2, 139.98, 'Short estampado', 19, 19);
+call sp_AgregarDetallePedido(1, 189.99, 'Traje infantil', 20, 20);
+
+-- Listar DetallePedido
+Delimiter //
+	Create procedure sp_ListarDetallePedido()
+		Begin
+			Select codigoDetalleP, cantidad, subtotal, descripcion, codigoPedido, codigoProducto from DetallePedidos;
+        End //
+Delimiter ;
+call sp_ListarDetallePedido();
+
+-- Eliminar DetallePedido
+Delimiter //
+	Create procedure sp_EliminarDetallePedido(
+    in _codigoDetallePedido int)
+		Begin
+			set foreign_key_checks = 0;
+				Delete from DetallePedidos
+					where codigoDetalleP = _codigoDetallePedido;
+				Select row_count() as filasEliminadas;
+			set foreign_key_checks = 1;
+        End//
+Delimiter ;
+call sp_EliminarDetallePedido(15);
+
+-- Buscar DetallePedido
+Delimiter //
+	Create procedure sp_BuscarDetallePedido(
+    in _codigoDetallePedido int)
+		Begin
+			Select codigoDetalleP, cantidad, subtotal, descripcion, codigoPedido, codigoProducto from DetallePedidos
+				where codigoDetalleP = _codigoDetallePedido;
+        End //
+Delimiter ;
+call sp_BuscarDetallePedido(1);
+
+-- Editar DetallePedido
+Delimiter //
+	Create procedure sp_EditarDetallePedido(
+    in _codigoDetalleP int,
+    in _cantidad int, 
+    in _subtotal double(5,2), 
+    in _descripcion varchar(200), 
+    in _codigoPedido int, 
+    in _codigoProducto int)
+		Begin
+			Update DetallePedidos
+				set cantidad = _cantidad,
+					subtotal = _subtotal,
+                    descripcion = _descripcion,
+                    codigoPedido = _codigoPedido,
+                    codigoProducto = _codigoProducto
+					where codigoDetalleP = _codigoDetalleP;
+        End //
+Delimiter ;
+call sp_EditarDetallePedido(16, 3, 389.97, 'Suéter cuello V juvenil', 16, 16);
+call sp_EditarDetallePedido(17, 1, 89.95, 'Falda con flores', 17, 17);
+call sp_EditarDetallePedido(18, 2, 318.00, 'Camisa a cuadros', 18, 18);
+call sp_EditarDetallePedido(19, 1, 74.99, 'Short niña con diseño', 19, 19);
+call sp_EditarDetallePedido(20, 1, 199.99, 'Traje niño formal', 20, 20);
