@@ -1,5 +1,5 @@
--- Por Josué Gilberto Jiménez Ajtún
--- 2021647
+-- Por Josué Gilberto Jiménez Ajtún, Sebastian alejandro Molina Herrera
+-- 2021647, 2021528
 -- IN5BM
 -- 07/07/2025
 
@@ -9,3 +9,13 @@ Create Database DB_KinalitosClothes;
 Use DB_KinalitosClothes;
 
 -- ---------- Entidades ----------
+-- Clientes
+Create table Clientes(
+	codigoCliente int auto_increment,
+	nombreCliente varchar(100) not null,
+	apellidoCliente varchar(100) not null,
+	correoCliente varchar(150) not null,
+	telefonoCliente varchar(20) not null,
+	direccionCliente varchar(200) not null,
+	primary key PK_codigoCliente (codigoCliente)  
+);
