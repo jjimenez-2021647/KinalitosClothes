@@ -1,5 +1,5 @@
--- Por Josué Gilberto Jiménez Ajtún, Sebastian alejandro Molina Herrera, Rhandy Estuardo Cana Subuyj, Joshua Alejandro Santa Cruz Chicas, Alejandro Jose Arocha Virula
--- 2021647, 2021528, 2021639, 2024254, 2024203,
+-- Por Josué Gilberto Jiménez Ajtún, Sebastian alejandro Molina Herrera, Rhandy Estuardo Cana Subuyj, Joshua Alejandro Santa Cruz Chicas, Alejandro Jose Arocha Virula, Jefry Andre Cruz Yuman, Roberto Andre Rodriguez Gonzalez
+-- 2021647, 2021528, 2021639, 2024254, 2024203, 2021644, 2023342
 -- IN5BM
 -- 07/07/2025
 
@@ -73,6 +73,22 @@ Create table Productos(
 		references Proveedores (codigoProveedor),
 	constraint FK_codigoCategoria foreign key (codigoCategoria)
 		references Categorias (codigoCategoria)
+);
+
+-- Pedidos
+Create table Pedidos(
+	codigoPedido int auto_increment,
+    horaPedido time not null,
+    fechaPedido date not null,
+    estadoPedido enum('Pendiente', 'Enviado', 'Entregado') not null, 
+    total double(10,2) not null,
+    codigoCliente int not null,
+    codigoMetodoPago int not null,
+    primary key PK_codigoPedido (codigoPedido),
+	constraint FK_codigoCliente foreign key (codigoCliente)
+		references Clientes (codigoCliente),
+	constraint FK_codigoMetodoPago foreign key (codigoMetodoPago)
+		references MetodoPagos (codigoMetodoPago)
 );
 
 -- --------------------------- Procedimientos almacenados ---------------------------
