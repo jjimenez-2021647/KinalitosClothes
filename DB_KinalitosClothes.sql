@@ -1,5 +1,5 @@
--- Por Josué Gilberto Jiménez Ajtún, Sebastian alejandro Molina Herrera, Rhandy Estuardo Cana Subuyj,
--- 2021647, 2021528, 2021639
+-- Por Josué Gilberto Jiménez Ajtún, Sebastian alejandro Molina Herrera, Rhandy Estuardo Cana Subuyj, , Alejandro Jose Arocha Virula
+-- 2021647, 2021528, 2021639, , 2024203,
 -- IN5BM
 -- 07/07/2025
 
@@ -46,6 +46,16 @@ Create table MetodoPagos(
     moneda varchar(150) not null,
 	porcentajeComision double(5,2) not null,
     primary key PK_codigoMetodoPago (codigoMetodoPago)
+);
+
+-- Usuarios
+Create table Usuarios(
+	codigoUsuario int auto_increment,
+	nombreUsuario varchar(100) not null,
+    contraseñaUsuario varchar(100) not null,
+    tipoUsuario enum('Admin', 'Usuario') not null,
+    fechaRegistro date not null,
+    primary key PK_codigoUsuario (codigoUsuario) 
 );
 
 -- --------------------------- Procedimientos almacenados ---------------------------
