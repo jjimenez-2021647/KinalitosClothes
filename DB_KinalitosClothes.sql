@@ -230,3 +230,94 @@ call sp_EditarProveedor(18, 'Distribuciones Continental', '+502 3678-5566', 'dis
 call sp_EditarProveedor(19, 'FashionMix Proveedores', '+502 4533-6788', 'proveedor.fashionmix@gmail.com', 'Guatemala');
 call sp_EditarProveedor(20, 'Estilo Joven Plus', '+502 2346-7899', 'estilojovenplus@gmail.com', 'México');
 
+-- --------------------------- Entidad Categoria --------------------------- 
+-- Agregar Categoria
+Delimiter //
+	Create procedure sp_AgregarCategoria(
+    in nombreCategoria varchar(100), 
+    in descripcionCategoria varchar(200), 
+    in genero enum('Hombre','Mujer','Unisex'), 
+    in rangoEdad enum('Infantil','Juvenil','Adultos'))
+		Begin
+			Insert into Categoria(nombreCategoria, descripcionCategoria, genero, rangoEdad)
+				Values(nombreCategoria, descripcionCategoria, genero, rangoEdad);
+        End //
+Delimiter ;
+call sp_AgregarCategoria('Camisas Casual', 'Camisas de uso diario y relajado', 'Hombre', 'Adultos');
+call sp_AgregarCategoria('Blusas Elegantes', 'Blusas para eventos y trabajo', 'Mujer', 'Adultos');
+call sp_AgregarCategoria('Ropa Deportiva', 'Prendas para hacer ejercicio', 'Unisex', 'Juvenil');
+call sp_AgregarCategoria('Pijamas', 'Conjunto de dormir cómodo', 'Unisex', 'Infantil');
+call sp_AgregarCategoria('Vestidos de Fiesta', 'Vestidos elegantes para eventos', 'Mujer', 'Juvenil');
+call sp_AgregarCategoria('Camisas Formales', 'Camisas para oficina o reuniones', 'Hombre', 'Adultos');
+call sp_AgregarCategoria('Pantalones Cargo', 'Pantalones con bolsillos utilitarios', 'Hombre', 'Juvenil');
+call sp_AgregarCategoria('Faldas Casual', 'Faldas para el día a día', 'Mujer', 'Adultos');
+call sp_AgregarCategoria('Shorts', 'Shorts para clima cálido', 'Unisex', 'Juvenil');
+call sp_AgregarCategoria('Suéteres', 'Prendas abrigadoras para frío', 'Unisex', 'Adultos');
+call sp_AgregarCategoria('Ropa Escolar', 'Uniformes y prendas escolares', 'Unisex', 'Infantil');
+call sp_AgregarCategoria('Chaquetas', 'Prendas para el frío y estilo', 'Unisex', 'Juvenil');
+call sp_AgregarCategoria('Ropa de Playa', 'Ropa ligera para el verano', 'Unisex', 'Adultos');
+call sp_AgregarCategoria('Leggins', 'Ropa ajustada y cómoda', 'Mujer', 'Juvenil');
+call sp_AgregarCategoria('Jeans', 'Pantalones de mezclilla', 'Unisex', 'Juvenil');
+call sp_AgregarCategoria('Trajes', 'Ropa formal para eventos', 'Hombre', 'Adultos');
+call sp_AgregarCategoria('Vestidos Casual', 'Vestidos para uso diario', 'Mujer', 'Adultos');
+call sp_AgregarCategoria('Sudaderas', 'Ropa cómoda para clima fresco', 'Unisex', 'Juvenil');
+call sp_AgregarCategoria('Conjuntos Infantiles', 'Ropa para niños pequeños', 'Unisex', 'Infantil');
+call sp_AgregarCategoria('Camisas Polo', 'Camisas semiformales de algodón', 'Hombre', 'Juvenil');
+
+-- Listar Categoria
+Delimiter //
+	Create procedure sp_ListarCategoria()
+		Begin
+			Select codigoCategoria, nombreCategoria, descripcionCategoria, genero, rangoEdad from Categoria;
+        End //
+Delimiter ;
+call sp_ListarCategoria();
+
+-- Eliminar Categoria
+Delimiter //
+	Create procedure sp_EliminarCategoria(
+    in _codigoCategoria int)
+		Begin
+			set foreign_key_checks = 0;
+				Delete from Categoria
+					where codigoCategoria = _codigoCategoria;
+				Select row_count() as filasEliminadas;
+			set foreign_key_checks = 1;
+        End//
+Delimiter ;
+call sp_EliminarCategoria(15);
+
+-- Buscar Categoria
+Delimiter //
+	Create procedure sp_BuscarCategoria(
+    in _codigoCategoria int)
+		Begin
+			Select codigoCategoria, nombreCategoria, descripcionCategoria, genero, rangoEdad from Categoria
+				where codigoCategoria = _codigoCategoria;
+        End //
+Delimiter ;
+call sp_BuscarCategoria(1);
+
+-- Editar Categoria
+Delimiter //
+	Create procedure sp_EditarCategoria(
+    in _codigoCategoria int,
+    in _nombreCategoria varchar(100), 
+    in _descripcionCategoria varchar(200), 
+    in _genero enum('Hombre','Mujer','Unisex'), 
+    in _rangoEdad enum('Infantil','Juvenil','Adultos'))
+		Begin
+			Update Categoria
+				set nombreCategoria = _nombreCategoria,
+                    descripcionCategoria = _descripcionCategoria,
+                    genero = _genero,
+                    rangoEdad = _rangoEdad
+					where codigoCategoria = _codigoCategoria;
+        End //
+Delimiter ;
+call sp_EditarCategoria(16, 'Trajes Ejecutivos', 'Ropa formal para oficina y eventos', 'Hombre', 'Adultos');
+call sp_EditarCategoria(17, 'Vestidos de Verano', 'Vestidos frescos para clima cálido', 'Mujer', 'Adultos');
+call sp_EditarCategoria(18, 'Sudaderas Estampadas', 'Prendas juveniles con diseño gráfico', 'Unisex', 'Juvenil');
+call sp_EditarCategoria(19, 'Ropa Escolar Moderna', 'Conjuntos escolares actualizados', 'Unisex', 'Infantil');
+call sp_EditarCategoria(20, 'Camisas Polo Juveniles', 'Polo juveniles para el día a día', 'Hombre', 'Juvenil');
+
